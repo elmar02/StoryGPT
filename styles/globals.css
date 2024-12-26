@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html {
+    scroll-behavior: smooth;
+    ;
+}
+
+.box-container {
+    @apply px-6 py-2 sm:w-[80%] sm:mx-auto sm:px-0
+}
+
+.flex-center {
+    @apply items-center justify-center
+}
+
+body::-webkit-scrollbar {
+    display: none;
+}
+
+.handwriting-container {
+    height: 180px;
+}
+
+.card {
+    .info-text{
+        span{
+            display: none;
+        }
+    }
+
+    .card-img{
+        @apply h-full;
+    }
+}
+
+@media (min-width: 348px) {
+    .handwriting-container {
+        height: 150px;
+    }
+
+    .card {
+        .read-more {
+            justify-content: space-between;
+        }
+
+        .info-text {
+            svg{
+                display: none;
+            }
+            span{
+                display: inline;
+            }
+        }
+
+        .card-img{
+            @apply aspect-square h-auto;
+        }
+    }
+}
+
+.section-box {
+    @apply px-3 sm:w-[90%] md:w-[80%] sm:mx-auto sm:px-0 py-16;
+
+    &.section-sm {
+        @apply py-5
+    }
+}
+
+.clearfix::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+button:disabled {
+    opacity: 0.5; /* Adjust opacity as needed */
+    cursor: not-allowed; /* Optional: changes the cursor to indicate the button is disabled */
+}
