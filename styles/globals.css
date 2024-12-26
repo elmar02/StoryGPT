@@ -2,87 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 html {
-    scroll-behavior: smooth;
-    ;
+  scroll-behavior: smooth;
 }
 
 .box-container {
-    @apply px-6 py-2 sm:w-[80%] sm:mx-auto sm:px-0
+  @apply px-6 py-2 sm:w-[80%] sm:mx-auto sm:px-0;
 }
 
 .flex-center {
-    @apply items-center justify-center
+  @apply items-center justify-center;
 }
 
 body::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .handwriting-container {
-    height: 180px;
+  height: 180px;
 }
 
-.card {
-    .card-box{
-        @apply flex-col;
-        .card-img{
-            @apply w-full aspect-square;
-        }
-    
-        .card-info{
-            @apply w-full;
-        }
-    }
-
+.card .card-box {
+  @apply flex-col;
+}
+.card .card-box .card-img {
+  @apply w-full aspect-square;
+}
+.card .card-box .card-info {
+  @apply w-full;
 }
 
 @media (min-width: 355px) {
-    .handwriting-container {
-        height: 150px;
-    }
-
-    .card {
-        .card-box{
-            @apply flex-row;
-            .card-img{
-                @apply w-1/2 h-auto;
-            }
-            .card-info{
-                @apply w-1/2;
-            }
-        }
-    }
+  .handwriting-container {
+    height: 150px;
+  }
+  .card .card-box {
+    @apply flex-row;
+  }
+  .card .card-box .card-img {
+    @apply w-1/2 h-auto;
+  }
+  .card .card-box .card-info {
+    @apply w-1/2;
+  }
 }
 
 @media (min-width: 640px) {
-    .card {
-        .card-box{
-            @apply flex-col;
-            .card-img{
-                @apply w-full;
-            }
-            .card-info{
-                @apply w-full;
-            }
-        }
-    }
+  .card .card-box {
+    @apply flex-col;
+  }
+  .card .card-box .card-img {
+    @apply w-full;
+  }
+  .card .card-box .card-info {
+    @apply w-full;
+  }
 }
 
 .section-box {
-    @apply px-3 sm:w-[90%] md:w-[80%] sm:mx-auto sm:px-0 py-16;
-
-    &.section-sm {
-        @apply py-5;
-    }
+  @apply px-3 sm:w-[90%] md:w-[80%] sm:mx-auto sm:px-0 py-16;
+}
+.section-box.section-sm {
+  @apply py-5;
 }
 
 .clearfix::after {
-    content: '';
-    display: table;
-    clear: both;
+  content: '';
+  display: table;
+  clear: both;
 }
 
 button:disabled {
-    opacity: 0.5; /* Adjust opacity as needed */
-    cursor: not-allowed; /* Optional: changes the cursor to indicate the button is disabled */
+  opacity: 0.5;
+  cursor: not-allowed;
 }
