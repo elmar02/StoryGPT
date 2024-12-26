@@ -1,3 +1,5 @@
+import { Story } from "@/types/story";
+
 export const genres = [
     'Fantasy',
     'Science Fiction',
@@ -45,3 +47,13 @@ export const conflicts = [
     'Friendship',
     'Betrayal',
 ];
+
+export function filterStories(stories: Story[] ,length: string, genre: string, search: string) {
+    return stories.filter((story)=>{
+        let isTrue = true
+        if(search.length>0) isTrue = story.title.toLowerCase().includes(search)
+        if(length.length>0) isTrue = story.length === length
+        if(genre.length>0) isTrue = story.genre === genre
+        return isTrue
+    })
+}

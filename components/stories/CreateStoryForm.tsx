@@ -1,5 +1,5 @@
 'use client'
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, KeyboardEvent, useRef, useState } from 'react'
 import Select, { Option } from '../common/Select'
 import { ages, conflicts, endings, genres, lengths, perspectives } from '@/libs/story'
 import Input from '../common/Input'
@@ -12,20 +12,41 @@ import { GenerateCover } from '@/actions/pollinations'
 import GenerateStory from '@/actions/gemini'
 import { useRouter } from 'next/navigation'
 
-const CreateStoryForm = ({userId}: {userId: number}) => {
+const CreateStoryForm = ({ userId }: { userId: number }) => {
     const [pending, setPending] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
+
+    const [keywords, setKeywords] = useState<string>("");
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        const validKeys = ['Enter', ',', '.', ' '];
+
+        if (validKeys.includes(e.key) && keywords.trim() !== "" && !keywords.endsWith(" ")) {
+            e.preventDefault();
+            setKeywords(prev => prev + ', ');
+        } else if (e.key === 'Backspace' && keywords.endsWith(', ')) {
+            e.preventDefault();
+            setKeywords(prev => prev.slice(0, -2));
+        } else if (!/[a-zA-Z0-9]/.test(e.key) && e.key !== 'Tab') {
+            e.preventDefault();
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setKeywords(e.target.value);
+    };
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries()) as unknown as StoryFormData;
-        
-        setPending(prev=>!prev)
+
+        setPending(prev => !prev)
         try {
-            const {title, genre, length} = data
-            const {coverPrompt, storyPrompt} = generatePrompt(data)
+            const { title, genre, length } = data
+            const { coverPrompt, storyPrompt } = generatePrompt(data)
             const [cover, story] = await Promise.all([GenerateCover(coverPrompt, title), GenerateStory(storyPrompt)])
             const newStory: NewStory = {
                 title,
@@ -36,16 +57,18 @@ const CreateStoryForm = ({userId}: {userId: number}) => {
                 userId
             }
             const result = await CreateStory(newStory)
-            if(result.success){
+            if (result.success) {
                 router.push(`/stories/${result.id}`)
                 return
             }
-            else setError(result.message)
+            else {
+                setError(result.message)
+                setPending(prev => !prev)
+
+            }
         } catch (error) {
             console.log(error)
             setError('failed to fetch')
-        }
-        finally {
             setPending(prev => !prev)
         }
     }
@@ -54,7 +77,7 @@ const CreateStoryForm = ({userId}: {userId: number}) => {
             <div className='grid lg:grid-cols-2 gap-3'>
                 <Input required placeholder='E.g. The Kingdom of Evergreen' label="Title *" type="text" name="title" id="title" />
                 <Input placeholder='E.g. a futuristic city' label="Location" type="text" name="location" id="location" />
-                <Input placeholder='E.g. magic, forest, dragon' label="Keywords" type="text" name="keywords" id="keywords" />
+                <Input value={keywords} onChange={(e) => setKeywords(e.target.value)} onKeyDown={handleKeyDown} placeholder='E.g. magic, forest, dragon' label="Keywords" type="text" name="keywords" id="keywords" />
                 <Input placeholder='E.g. Harry Potter' label="Main Characters" type="text" name="main_characters" id="main_characters" />
             </div>
             <div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-3'>

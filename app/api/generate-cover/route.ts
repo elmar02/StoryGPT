@@ -16,25 +16,29 @@ export async function POST(req: NextRequest) {
             cache: 'no-store'
         });
 
+        console.log('1');
         if (!response.ok) {
             throw new Error(`Failed to fetch image: ${response.statusText}`);
         }
         
+        console.log('2');
         const buffer = await response.arrayBuffer();
-
+        
+        console.log('3');
         const coversDir = path.join(process.cwd(), 'public', 'covers');
-
-        const fileName = `${Date.now()}-${title.replace(/\s+/g, '_')}.jpg`;
-
+        
+        const fileName = `${Date.now()}-${title.replace(/[<>:"/\\|?*]/g, '_')}.jpg`;
+        
         const filePath = path.join(coversDir, fileName);
-
+        
         if (!fs.existsSync(coversDir)) {
             fs.mkdirSync(coversDir, { recursive: true });
         }
-
+        
         fs.writeFileSync(filePath, Buffer.from(buffer));
 
-        const imageUrl = `/covers/${fileName}`;        
+        const imageUrl = `/covers/${fileName}`; 
+               
         return NextResponse.json({ src: imageUrl }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ error }, { status: 500 });

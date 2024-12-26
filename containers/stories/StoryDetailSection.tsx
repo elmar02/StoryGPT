@@ -12,7 +12,6 @@ const sourcesans = Source_Sans_3({
 })
 
 const StoryDetailSection = ({ story }: { story: Story }) => {
-
     return (
         <section id='story-detail' className='section-box section-sm'>
             <Label className='text-center'>{story.title}</Label>
@@ -37,9 +36,8 @@ const StoryDetailSection = ({ story }: { story: Story }) => {
             <div className='flex flex-row gap-y-2 justify-between items-center'>
                 <div className='space-x-1 text-sm font-semibold text-slate-900'>
                     <span className='bg-teal-500 rounded-md p-1'>{story.genre}</span>
-                    <span className='bg-teal-500 rounded-md p-1'>{story.length}</span>
                 </div>
-                <SaveButton />
+                <SaveButton id={story.id}/>
             </div>
         </section>
     )

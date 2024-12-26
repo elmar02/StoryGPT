@@ -1,13 +1,13 @@
 import React, { ReactNode, SelectHTMLAttributes } from 'react'
 
 interface Props extends SelectHTMLAttributes<HTMLSelectElement>{
-    label: string
+    label?: string
 }
 
 const Select = ({label, ...rest}: Props) => {
     return (
         <div className='flex flex-col gap-1'>
-            <label className='font-semibold text-sm' htmlFor={rest.id}>{label}</label>
+            {label && <label className='font-semibold text-sm' htmlFor={rest.id}>{label}</label>}
             <select className='bg-transparent outline-teal-500 border border-white/30 p-2 rounded' {...rest} />
         </div>
     )

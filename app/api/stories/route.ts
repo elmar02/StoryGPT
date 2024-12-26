@@ -37,6 +37,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
       const { newStory }: { newStory: NewStory } = await req.json();
+console.log(newStory);
 
       if (!newStory.title || !newStory.length || !newStory.description || !newStory.genre || !newStory.coverUrl || !newStory.userId) {
           return NextResponse.json(

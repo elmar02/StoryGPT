@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import SaveButton from '../common/SaveButton'
 
 const play_fair = Playfair_Display({
     weight: '900',
@@ -24,24 +25,20 @@ interface Props {
 }
 
 const StoryCard = ({ story }: Props) => {
-    const [saved, setSaved] = useState(false)
-    const {coverUrl, description, genre, id, length, title} = story
-    const toggleSave = () => {
-        setSaved(prev => !prev)
-    }
+    const {coverUrl, description, genre, id, title} = story
+
     return (
         <div className='card p-3 bg-slate-900 rounded'>
-            <div className='grid grid-cols-2 sm:grid-cols-1 gap-3'>
-                <div className='card-img relative bg-slate-950'>
+            <div className='card-box flex gap-3 h-full'>
+                <div className='card-img sm:w-full relative bg-slate-950'>
                     <Image src={coverUrl} alt={title} fill className='object-cover' />
                 </div>
-                <div className='space-y-2 flex flex-col justify-between'>
+                <div className='card-info sm:w-full space-y-2 flex flex-col justify-between flex-1'>
                     <div className='space-y-1'>
                         <div className='space-x-1 text-xs font-semibold text-slate-900'>
                             <span className='bg-teal-500 rounded-md px-1'>{genre}</span>
-                            <span className='bg-teal-500 rounded-md px-1'>{length}</span>
                         </div>
-                        <h1 title={title} className={`text-lg ${play_fair.className} line-clamp-1`}>{title}</h1>
+                        <h1 title={title} className={`text-lg ${play_fair.className} break-words`}>{title}</h1>
                         <div className={`text-sm ${open_sans.className} line-clamp-3`}>
                             <ReactMarkdown
                                 components={{
@@ -55,16 +52,11 @@ const StoryCard = ({ story }: Props) => {
                             </ReactMarkdown>
                         </div>
                     </div>
-                    <div className='read-more flex items-center gap-2'>
+                    <div className='read-more flex items-center gap-2 justify-between'>
                         <Link href={`/stories/${id}`} className='info-text p-2 border rounded border-teal-500 text-teal-500 hover:border-teal-400 hover:text-teal-500 inline-block'>
-                            <span>
-                                Read More
-                            </span>
-                            <FontAwesomeIcon className='px-1' icon={faInfo} />
+                            Read More
                         </Link>
-                        <button onClick={toggleSave} className='p-2 rounded border text-slate-500 border-slate-500 hover:text-slate-400 hover:border-slate-400 transition-colors'>
-                            <FontAwesomeIcon icon={saved ? faSaved : faSave} />
-                        </button>
+                        <SaveButton id={id}/>
                     </div>
                 </div>
             </div>
