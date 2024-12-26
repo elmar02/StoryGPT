@@ -9,7 +9,7 @@ interface Props {
     stories: Story[]
 }
 
-const StoriesSection = ({ stories }: Props) => {
+const StoriesSection = ({ stories }: Props) => {    
     return (
         <section id='stories' className='section-box'>
             <Label className='text-center'>Discover Stories Created by Our Community</Label>

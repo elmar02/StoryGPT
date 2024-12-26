@@ -31,7 +31,7 @@ const StoryCard = ({ story }: Props) => {
         <div className='card p-3 bg-slate-900 rounded'>
             <div className='card-box flex gap-3 h-full'>
                 <div className='card-img sm:w-full relative bg-slate-950'>
-                    <Image src={coverUrl} alt={title} fill className='object-cover' />
+                    <Image width={1024} height={1024} src={coverUrl} alt={title} className='absolute object-cover' />
                 </div>
                 <div className='card-info sm:w-full space-y-2 flex flex-col justify-between flex-1'>
                     <div className='space-y-1'>

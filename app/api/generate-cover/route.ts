@@ -16,15 +16,12 @@ export async function POST(req: NextRequest) {
             cache: 'no-store'
         });
 
-        console.log('1');
         if (!response.ok) {
             throw new Error(`Failed to fetch image: ${response.statusText}`);
         }
         
-        console.log('2');
         const buffer = await response.arrayBuffer();
         
-        console.log('3');
         const coversDir = path.join(process.cwd(), 'public', 'covers');
         
         const fileName = `${Date.now()}-${title.replace(/[<>:"/\\|?*]/g, '_')}.jpg`;

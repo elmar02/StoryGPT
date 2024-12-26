@@ -67,7 +67,7 @@ const CreateStoryForm = ({ userId }: { userId: number }) => {
 
             }
         } catch (error) {
-            console.log(error)
+            console.error(error)
             setError('failed to fetch')
             setPending(prev => !prev)
         }
