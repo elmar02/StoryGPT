@@ -1,9 +1,10 @@
 'use server'
 
+import { apiKey } from "@/libs/keys"
 import { Session } from "@/types/users"
 
 export async function GetUser(email: string) {
-    const response = await fetch(`http://localhost:3000/api/users/${email}`,{
+    const response = await fetch(`${apiKey}/users/${email}`,{
         cache: 'no-store'
     })
     const result = await response.json()
@@ -11,7 +12,7 @@ export async function GetUser(email: string) {
 }
 
 export async function AddUser(session: Session) {
-    const response = await fetch(`http://localhost:3000/api/users`, {
+    const response = await fetch(`${apiKey}/users`, {
         method: 'POST',
         body: JSON.stringify({
             newUser: session

@@ -1,7 +1,9 @@
 'use server'
 
+import { apiKey } from "@/libs/keys";
+
 export async function GenerateCover(prompt: string, title: string) {  
-    const response = await fetch('http://localhost:3000/api/generate-cover', {
+    const response = await fetch(`${apiKey}/generate-cover`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

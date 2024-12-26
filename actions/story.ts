@@ -1,10 +1,9 @@
 'use server'
-import GenerateStory from "./gemini"
-import { GenerateCover } from "./pollinations"
-import { NewStory, Story, StoryFormData } from "@/types/story"
+import { apiKey } from "@/libs/keys"
+import { NewStory, Story } from "@/types/story"
 
 export async function CreateStory(newStory: NewStory) {
-    const response = await fetch(`http://localhost:3000/api/stories`, {
+    const response = await fetch(`${apiKey}/stories`, {
         method: 'POST',
         body: JSON.stringify({
             newStory
@@ -15,7 +14,7 @@ export async function CreateStory(newStory: NewStory) {
 }
 
 export async function GetStories(userId?: number) {       
-    const url = `http://localhost:3000/api/stories${userId ? `?userId=${userId}` : ''}` 
+    const url = `${apiKey}/stories${userId ? `?userId=${userId}` : ''}` 
     const response = await fetch(url,{
         cache: 'no-store'
     })
@@ -24,7 +23,7 @@ export async function GetStories(userId?: number) {
 }
 
 export async function GetStoriesById(id: string) {
-    const response = await fetch(`http://localhost:3000/api/stories/${id}`,{
+    const response = await fetch(`${apiKey}/stories/${id}`,{
         cache: 'no-store'
     })
     const result: {story: Story|null} = await response.json()
