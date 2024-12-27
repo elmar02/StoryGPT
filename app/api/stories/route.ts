@@ -38,7 +38,7 @@ export async function POST(req: Request) {
   try {
       const { newStory }: { newStory: NewStory } = await req.json();
 
-      if (!newStory.title || !newStory.length || !newStory.description || !newStory.genre || !newStory.coverUrl || !newStory.userId) {
+      if (!newStory.title || !newStory.length || !newStory.description || !newStory.genre || !newStory.userId) {
           return NextResponse.json(
               { success: false, message: "Missing required fields" },
               { status: 400 }
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
       `;
       const values = [
           newStory.title,
-          newStory.length,
+          newStory.length??'/covers/1735239365568-Willy William.jpg',
           newStory.description,
           newStory.genre,
           newStory.coverUrl,
