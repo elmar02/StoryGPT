@@ -51,10 +51,10 @@ export async function POST(req: Request) {
       `;
       const values = [
           newStory.title,
-          newStory.length??'/covers/1735239365568-Willy William.jpg',
+          newStory.length,
           newStory.description,
           newStory.genre,
-          newStory.coverUrl,
+          newStory.coverUrl??'/covers/1735239365568-Willy William.jpg',
           newStory.userId,
       ];
 
