@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getSession } from "./libs/auth";
+import { NextRequest, NextResponse } from "next/server"
+import { getSession } from "./libs/auth"
 
 export async function middleware(request:NextRequest) {
     const pathname = request.nextUrl.pathname
