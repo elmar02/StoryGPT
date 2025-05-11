@@ -1,9 +1,6 @@
 import { Session } from "@/types/users";
 import { NextResponse } from "next/server";
-import mysql from 'mysql2/promise';
-import { db } from "@/libs/db";
-import { decryptValue, encryptValue } from "@/libs/crypto";
-import { authKey } from "@/libs/keys";
+import {db} from "@/libs/db";
 
 export async function POST(req: Request) {
     try {
@@ -16,15 +13,13 @@ export async function POST(req: Request) {
             );
         }
 
-
         const query = `
             INSERT INTO users (email, password, fullname)
-            VALUES (?, ?, ?)
+            VALUES ($1, $2, $3)
         `;
         const values = [newUser.email, newUser.password, newUser.fullname];
-        const connection = await db.getConnection()
-        const [result] = await connection.execute(query, values);
 
+        await db.query(query, values);
 
         return NextResponse.json(
             { message: 'User added successfully', success: true },

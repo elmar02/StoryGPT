@@ -1,8 +1,6 @@
-import mysql from 'mysql2/promise';
+import { Pool } from 'pg';
 
-export const db = mysql.createPool({
-  host: '167.71.23.192',
-  user: 'Elmar',
-  password: 'Elmar123',
-  database: 'storydb',
+export const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
 });

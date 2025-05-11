@@ -6,13 +6,14 @@ export async function GET(req: Request, { params }: { params: { email: string } 
     const { email } = params;
 
     try {
-        const connection = await db.getConnection()
-
         const query = `
-            SELECT * FROM users WHERE email = ?
+            SELECT * FROM users WHERE email = $1
         `;
-        const [rows] = await connection.execute(query, [email]);
-        const users = rows as User[]
+        const values = [email];
+
+        const result = await db.query(query, values);
+
+        const users = result.rows as User[];
 
         if (users.length === 0) {
             return NextResponse.json(

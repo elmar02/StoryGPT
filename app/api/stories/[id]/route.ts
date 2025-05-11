@@ -4,14 +4,15 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
   const { id } = params;
+  
   try {
     // Query the story by ID
-    const query = `SELECT * FROM stories WHERE id = ?`;
-    const connection = await db.getConnection()
+    const query = `SELECT * FROM stories WHERE id = $1`;
+    const values = [id];
 
-    const [rows] = await connection.execute(query, [id]);
+    const result = await db.query(query, values);
 
-    const stories = rows as Story[];
+    const stories = result.rows as Story[];
 
     if (stories.length === 0) {
       return NextResponse.json(
